@@ -12,6 +12,23 @@ if (!isset($_SESSION["Tipo"]) || $_SESSION["Tipo"] !== "A") {
 require_once('config.php');
 $conn = connect_db();
 
+// Configuração da paginação
+$itens_por_pagina = 10;
+$pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+$offset = ($pagina_atual - 1) * $itens_por_pagina;
+
+// Get total records count
+try {
+    $sql_total = "SELECT COUNT(*) as total FROM carros";
+    $stmt_total = $conn->query($sql_total);
+    $total_registros = $stmt_total->fetch(PDO::FETCH_ASSOC)['total'];
+    $total_paginas = ceil($total_registros / $itens_por_pagina);
+} catch (PDOException $e) {
+    $erro = "Erro ao contar registros: " . $e->getMessage();
+    $total_registros = 0;
+    $total_paginas = 0;
+}
+
 // Processar exclusão se solicitado
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
     $id_carro = intval($_GET['id']);
@@ -46,9 +63,13 @@ try {
             FROM carros c
             JOIN modelo mo ON c.Id_Modelo = mo.Id_Modelo
             JOIN marca ma ON mo.idMarca = ma.idMarca
-            ORDER BY c.ID_Carro DESC";
+            ORDER BY c.ID_Carro DESC
+            LIMIT :limit OFFSET :offset";
     
-    $stmt = $conn->query($sql);
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':limit', $itens_por_pagina, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
     $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     $erro = "Erro ao buscar veículos: " . $e->getMessage();
@@ -70,6 +91,24 @@ try {
         .action-buttons { white-space: nowrap; }
         .btn-view { background-color: #17a2b8; color: white; }
         .btn-view:hover { background-color: #138496; color: white; }
+        .pagination .page-link {
+            color: #212529;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #212529;
+            border-color: #212529;
+            color: #fff;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            color: #6c757d;
+            pointer-events: none;
+            background-color: #fff;
+            border-color: #dee2e6;
+        }
     </style>
 </head>
 <body>
@@ -157,15 +196,53 @@ try {
                         <?php endif; ?>
                     </tbody>
                 </table>
+                
+                <?php if ($total_paginas > 1): ?>
+                <nav aria-label="Navegação de páginas" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <!-- Botão Anterior -->
+                        <li class="page-item <?php echo ($pagina_atual <= 1) ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="?pagina=<?php echo $pagina_atual - 1; ?>" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        
+                        <!-- Números das Páginas -->
+                        <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+                            <li class="page-item <?php echo ($pagina_atual == $i) ? 'active' : ''; ?>">
+                                <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+                            </li>
+                        <?php endfor; ?>
+                        
+                        <!-- Botão Próximo -->
+                        <li class="page-item <?php echo ($pagina_atual >= $total_paginas) ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="?pagina=<?php echo $pagina_atual + 1; ?>" aria-label="Próximo">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <?php endif; ?>
             </div>
         </div>
     </div>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+                <li class="page-item <?php echo $i == $pagina_atual ? 'active' : ''; ?>">
+                    <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+                </li>
+            <?php endfor; ?>
+        </ul>
+    </nav>
 </div>
 
 <script>
 function confirmarExclusao(id) {
     if (confirm('Tem certeza que deseja excluir este veículo? Esta ação não pode ser desfeita.')) {
-        window.location.href = 'gerir_veiculos.php?action=delete&id=' + id;
+        window.location.href = 'gerir_veiculos.php?action=delete&id=' + id + '&pagina=<?php echo $pagina_atual; ?>';
     }
 }
 </script>

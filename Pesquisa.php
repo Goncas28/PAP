@@ -666,5 +666,10 @@ try {
     }
     <?php endif; ?>
 </script>
+</div>
+</div>
+
+<?php require('includes/footer.php'); ?>
+<script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

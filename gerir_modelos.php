@@ -15,6 +15,23 @@ $conn = connect_db();
 $mensagem = '';
 $erro = '';
 
+// Configuração da paginação
+$itens_por_pagina = 10;
+$pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+$offset = ($pagina_atual - 1) * $itens_por_pagina;
+
+// Get total records count
+try {
+    $sql_total = "SELECT COUNT(*) as total FROM modelo";
+    $stmt_total = $conn->query($sql_total);
+    $total_registros = $stmt_total->fetch(PDO::FETCH_ASSOC)['total'];
+    $total_paginas = ceil($total_registros / $itens_por_pagina);
+} catch (PDOException $e) {
+    $erro = "Erro ao contar registros: " . $e->getMessage();
+    $total_registros = 0;
+    $total_paginas = 0;
+}
+
 // Processar exclusão se solicitado
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
     $id_modelo = intval($_GET['id']);
@@ -54,9 +71,13 @@ try {
     $sql = "SELECT m.Id_Modelo, m.Modelo, m.idMarca, ma.marca 
             FROM modelo m
             JOIN marca ma ON m.idMarca = ma.idMarca
-            ORDER BY ma.marca, m.Modelo";
+            ORDER BY ma.marca, m.Modelo
+            LIMIT :limit OFFSET :offset";
     
-    $stmt = $conn->query($sql);
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':limit', $itens_por_pagina, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
     $modelos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
 } catch (PDOException $e) {
@@ -147,15 +168,44 @@ try {
                         <?php endif; ?>
                     </tbody>
                 </table>
+                
+                <?php if ($total_paginas > 1): ?>
+                <nav aria-label="Navegação de páginas" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <!-- Botão Anterior -->
+                        <li class="page-item <?php echo ($pagina_atual <= 1) ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="?pagina=<?php echo $pagina_atual - 1; ?>" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        
+                        <!-- Números das Páginas -->
+                        <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+                            <li class="page-item <?php echo ($pagina_atual == $i) ? 'active' : ''; ?>">
+                                <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+                            </li>
+                        <?php endfor; ?>
+                        
+                        <!-- Botão Próximo -->
+                        <li class="page-item <?php echo ($pagina_atual >= $total_paginas) ? 'disabled' : ''; ?>">
+                            <a class="page-link" href="?pagina=<?php echo $pagina_atual + 1; ?>" aria-label="Próximo">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <?php endif; ?>
             </div>
         </div>
     </div>
+
+  
 </div>
 
 <script>
 function confirmarExclusao(id, nome) {
     if (confirm('Tem certeza que deseja excluir o modelo "' + nome + '"? Esta ação não pode ser desfeita.')) {
-        window.location.href = 'gerir_modelos.php?action=delete&id=' + id;
+        window.location.href = 'gerir_modelos.php?action=delete&id=' + id + '&pagina=<?php echo $pagina_atual; ?>';
     }
 }
 </script>

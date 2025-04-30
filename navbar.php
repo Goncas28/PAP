@@ -76,6 +76,9 @@ $root_prefix = $in_admin_folder ? '../' : '';
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
                             <li><a class="dropdown-item" href="<?php echo $root_prefix; ?>Dashboard.php"><i class="bi bi-person"></i> Meu Perfil</a></li>
                             <li><a class="dropdown-item" href="<?php echo $root_prefix; ?>meus_favoritos.php"><i class="bi bi-heart"></i> Meus Favoritos</a></li>
+                            <?php if (isset($_SESSION["Tipo"]) && $_SESSION["Tipo"] === "A"): ?>
+                                <li><a class="dropdown-item" href="<?php echo $admin_prefix; ?>definicoes.php"><i class="bi bi-gear"></i> Definições</a></li>
+                            <?php endif; ?>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="<?php echo $root_prefix; ?>logout.php"><i class="bi bi-box-arrow-right"></i> Terminar Sessão</a></li>
                         </ul>

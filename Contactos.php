@@ -3,6 +3,39 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+require_once("config.php");
+$pdo = connect_db();
+
+// Default values
+$config = [
+    'horario_funcionamento' => 'Segunda a Sexta, 9h às 18h',
+    'email_contacto' => 'standgcars@gmail.com',
+    'telefone_contacto' => '969053456'
+];
+
+// Buscar configurações
+try {
+    $stmt = $pdo->query("SELECT * FROM configuracoes LIMIT 1");
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Only update $config if we got results
+    if ($result) {
+        $config = $result;
+    } else {
+        // Insert default values if table is empty
+        $sql = "INSERT INTO configuracoes (horario_funcionamento, email_contacto, telefone_contacto) 
+                VALUES (:horario, :email, :telefone)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':horario' => $config['horario_funcionamento'],
+            ':email' => $config['email_contacto'],
+            ':telefone' => $config['telefone_contacto']
+        ]);
+    }
+} catch(PDOException $e) {
+    error_log("Erro ao carregar configurações: " . $e->getMessage());
+}
+
 $title = "Contactos - G-Cars";
 ?>
 <!DOCTYPE html>
@@ -32,16 +65,16 @@ $title = "Contactos - G-Cars";
                 <div class="card-body">
                     <h5 class="card-title">Informações de Contacto</h5>
                     <p><i class="bi bi-geo-alt-fill"></i> Endereço: Viseu 123</p>
-                    <p><i class="bi bi-telephone-fill"></i> Telefone: 969053456</p>
-                    <p><i class="bi bi-envelope-fill"></i> Email: goncas1416@gmail.com</p>
-                    <p><i class="bi bi-clock-fill"></i> Horário de Funcionamento: Segunda a Sexta, 9h às 18h</p>
+                    <p><i class="bi bi-telephone-fill"></i> Telefone: +351 <?php echo htmlspecialchars($config['telefone_contacto']); ?></p>
+                    <p><i class="bi bi-envelope-fill"></i> Email: <?php echo htmlspecialchars($config['email_contacto']); ?></p>
+                    <p><i class="bi bi-clock-fill"></i> Horário de Funcionamento: <?php echo htmlspecialchars($config['horario_funcionamento']); ?></p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Certifique-se de incluir o Bootstrap JS no final da página -->
-<script src="js/bootstrap.bundle.min.js"></script>
+
+<?php require('includes/footer.php'); ?>
 </body>
 </html>

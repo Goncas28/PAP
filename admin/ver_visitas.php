@@ -18,6 +18,23 @@ if (!isset($_SESSION["Tipo"]) || $_SESSION["Tipo"] !== "A") {
 require_once('../config.php');
 $conn = connect_db();
 
+// Configuração da paginação
+$itens_por_pagina = 10;
+$pagina_atual = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+$offset = ($pagina_atual - 1) * $itens_por_pagina;
+
+// Get total records for pagination
+try {
+    $sql_total = "SELECT COUNT(*) as total FROM marcarvisita";
+    $stmt_total = $conn->query($sql_total);
+    $total_registros = $stmt_total->fetch(PDO::FETCH_ASSOC)['total'];
+    $total_paginas = ceil($total_registros / $itens_por_pagina);
+} catch (PDOException $e) {
+    $erro = "Erro ao contar registros: " . $e->getMessage();
+    $total_registros = 0;
+    $total_paginas = 0;
+}
+
 // Processar exclusão de visita se solicitado
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
     $id_visita = $_GET['delete'];
@@ -40,9 +57,13 @@ try {
             JOIN carros car ON mv.ID_Carro = car.ID_Carro
             JOIN modelo mo ON car.Id_Modelo = mo.Id_Modelo
             JOIN marca m ON mo.idMarca = m.idMarca
-            ORDER BY mv.DataVisita ASC, mv.Hora_Visita ASC";
+            ORDER BY mv.DataVisita ASC, mv.Hora_Visita ASC
+            LIMIT :limit OFFSET :offset";
     
-    $stmt = $conn->query($sql);
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':limit', $itens_por_pagina, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
     $visitas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     $erro = "Erro ao buscar visitas: " . $e->getMessage();
@@ -68,6 +89,25 @@ $title = "Visualizar Visitas - GCars Admin";
             border-radius: 8px;
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
             padding: 20px;
+        }
+
+        .pagination .page-link {
+            color: #212529;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #212529;
+            border-color: #212529;
+            color: #fff;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            color: #6c757d;
+            pointer-events: none;
+            background-color: #fff;
+            border-color: #dee2e6;
         }
     </style>
 </head>
@@ -166,13 +206,50 @@ $title = "Visualizar Visitas - GCars Admin";
                     <?php endif; ?>
                 </tbody>
             </table>
+            
+            <?php if ($total_paginas > 1): ?>
+            <nav aria-label="Navegação de páginas" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <!-- Botão Anterior -->
+                    <li class="page-item <?php echo ($pagina_atual <= 1) ? 'disabled' : ''; ?>">
+                        <a class="page-link" href="?pagina=<?php echo $pagina_atual - 1; ?>" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    
+                    <!-- Números das Páginas -->
+                    <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+                        <li class="page-item <?php echo ($pagina_atual == $i) ? 'active' : ''; ?>">
+                            <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        </li>
+                    <?php endfor; ?>
+                    
+                    <!-- Botão Próximo -->
+                    <li class="page-item <?php echo ($pagina_atual >= $total_paginas) ? 'disabled' : ''; ?>">
+                        <a class="page-link" href="?pagina=<?php echo $pagina_atual + 1; ?>" aria-label="Próximo">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <?php endif; ?>
         </div>
+        
+        <nav aria-label="Paginação">
+            <ul class="pagination justify-content-center mt-4">
+                <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+                    <li class="page-item <?php echo $i == $pagina_atual ? 'active' : ''; ?>">
+                        <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    </li>
+                <?php endfor; ?>
+            </ul>
+        </nav>
     </div>
 
     <script>
     function confirmarExclusao(id) {
         if (confirm('Tem certeza que deseja eliminar esta visita?')) {
-            window.location.href = 'ver_visitas.php?delete=' + id;
+            window.location.href = 'ver_visitas.php?delete=' + id + '&pagina=<?php echo $pagina_atual; ?>';
         }
     }
     </script>

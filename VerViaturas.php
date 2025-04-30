@@ -233,9 +233,11 @@ $title = "Ver Viaturas - G-Cars";
         error_log("Database Error: " . $e->getMessage());
     }
     ?>
+    </div>
 </div>
 
-<script src="js/bootstrap.bundle.min.js"></script>
+<?php require('includes/footer.php'); ?>
+
 <script>
     // Função para manipular clique no favorito
     function toggleFavorite(button, event, carId) {

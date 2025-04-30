@@ -46,7 +46,7 @@ $title = "Serviços - G-Cars";
         <div class="col-md-4 mb-4">
             <div class="card h-100 service-card">
                 <div class="card-body">
-                    <h5 class="card-title">Manutenção</h5>
+                    <h5 class="card-title">Garantia</h5>
                     <p class="card-text">Serviços completos de manutenção realizados por profissionais qualificados.</p>
                 </div>
             </div>
@@ -62,7 +62,6 @@ $title = "Serviços - G-Cars";
     </div>
 </div>
 
-<!-- Certifique-se de incluir o Bootstrap JS no final da página -->
-<script src="js/bootstrap.bundle.min.js"></script>
+<?php require('includes/footer.php'); ?>
 </body>
 </html>
