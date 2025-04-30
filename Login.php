@@ -4,13 +4,14 @@ $title = "Login - G-Cars";
 include "includes/header.php";
 require('navbar.php');
 
-// Add PHPMailer classes
+// Replace the autoloader with direct requires
+require 'PHPMailer\src\Exception.php';
+require 'PHPMailer\src\PHPMailer.php';
+require 'PHPMailer\src\SMTP.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
-
-// // Add composer autoloader
-// require 'vendor/autoload.php';
 
 $errorMessage = '';
 $successMessage = '';
@@ -71,34 +72,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->execute([$email]);
                 
                 if ($stmt->rowCount() > 0) {
+                    // Generate unique token
+                    $token = bin2hex(random_bytes(32));
+                    $expiry = date('Y-m-d H:i:s', strtotime('+1 hour'));
+                    
+                    // Save token to database
+                    $updateStmt = $pdo->prepare("UPDATE clientes SET reset_token = ?, reset_token_expires = ? WHERE Email = ?");
+                    $updateStmt->execute([$token, $expiry, $email]);
+
                     // Create a new PHPMailer instance
                     $mail = new PHPMailer(true);
 
                     try {
-                        // Server settings
                         $mail->isSMTP();
                         $mail->Host = 'smtp.gmail.com';
                         $mail->SMTPAuth = true;
-                        $mail->Username = 'standgcars@gmail.com'; // Your Gmail
-                        $mail->Password = 'ichl vvtp dmod pbhc'; // Your Gmail App Password
+                        $mail->Username = 'standgcars@gmail.com';
+                        $mail->Password = 'ichl vvtp dmod pbhc';
                         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                         $mail->Port = 587;
 
-                        // Recipients
                         $mail->setFrom('standgcars@gmail.com', 'G-Cars');
                         $mail->addAddress($email);
 
-                        // Content
                         $mail->isHTML(true);
+                        $resetLink = "http://localhost/PAP/reset_password.php?token=" . $token;
                         $mail->Subject = 'Recuperação de Senha - G-Cars';
-                        $mail->Body = "Foi solicitada a recuperação de senha para sua conta.<br><br>"
-                                   . "Por favor, entre em contato com standgcars@gmail.com para mais instruções.<br><br>"
+                        $mail->Body = "Para redefinir sua senha, clique no link abaixo:<br><br>"
+                                   . "<a href='{$resetLink}'>Redefinir Senha</a><br><br>"
+                                   . "Este link é válido por 1 hora.<br>"
                                    . "Se você não solicitou esta recuperação, por favor ignore este email.";
 
-                        $mail->send();
-                        $successMessage = "As instruções de recuperação foram enviadas para o seu email.";
+                        if ($mail->send()) {
+                            header("Location: emailenviado.php");
+                            exit();
+                        } else {
+                            $errorMessage = "Erro ao enviar o email. Por favor, tente novamente.";
+                        }
                     } catch (Exception $e) {
-                        $errorMessage = "Erro ao enviar o email: {$mail->ErrorInfo}";
+                        $errorMessage = "Erro ao enviar o email. Por favor, tente novamente.";
                     }
                 } else {
                     $errorMessage = "Email não encontrado no sistema.";

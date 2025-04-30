@@ -9,7 +9,7 @@ session_start();
 
 // Verifica se o usuário é administrador
 if (!isset($_SESSION["Tipo"]) || $_SESSION["Tipo"] !== "A") {
-    header('Location: ../login.php');
+    header('Location: ../Login.php');
     exit();
 }
 
