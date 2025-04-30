@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $mail->Body = "Para redefinir sua senha, clique no link abaixo:<br><br>"
                                    . "<a href='{$resetLink}'>Redefinir Senha</a><br><br>"
                                    . "Este link é válido por 1 hora.<br>"
-                                   . "Se você não solicitou esta recuperação, por favor ignore este email.";
+                                   . "Se não solicitou esta recuperação, por favor ignore este email.";
 
                         if ($mail->send()) {
                             header("Location: emailenviado.php");
@@ -203,5 +203,3 @@ document.getElementById('togglePassword').addEventListener('click', function () 
 </script>
 
 <?php include 'includes/footer.php'; ?>
-</body>
-</html>

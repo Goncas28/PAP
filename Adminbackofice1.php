@@ -217,11 +217,3 @@ $title = "Painel Administrativo - G-Cars";
 <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-<?php
-try {
-    // ...existing code...
-} catch (PDOException $e) {
-    die("ERROR: Não foi possível executar $sql. " . $e->getMessage());
-}
-unset($link);
-?>

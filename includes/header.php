@@ -21,8 +21,3 @@ if (!isset($_SESSION)) {
     session_start();
 }
 ?>
-<!-- The navbar will be included separately by each page -->
-<!-- Adicionar o script Bootstrap no fim do body -->
-<script src="js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

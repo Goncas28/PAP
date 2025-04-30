@@ -126,6 +126,3 @@ require_once __DIR__ . "/config.php";
     </div>
     
     <?php include 'includes/footer.php'; ?>
-
-</body>
-</html>

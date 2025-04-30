@@ -1,4 +1,4 @@
-<body>
+
     <!-- Footer content -->
     <footer class="text-center mt-5 py-3 bg-light">
         <p>G-Cars / Todos os direitos reservados</p>
