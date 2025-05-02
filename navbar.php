@@ -19,7 +19,7 @@ $root_prefix = $in_admin_folder ? '../' : '';
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto me-2 mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="<?php echo $root_prefix; ?>VerViaturas.php">Veículos</a>
+                    <a class="nav-link" aria-current="page" href="<?php echo $root_prefix; ?>admin/VerViaturas.php">Veículos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo $root_prefix; ?>Servicos.php">Serviços</a>
@@ -35,10 +35,10 @@ $root_prefix = $in_admin_folder ? '../' : '';
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark">
                                 <li><a class="dropdown-item" href="<?php echo $admin_prefix; ?>ver_visitas.php">Gerir Visitas</a></li>
-                                <li><a class="dropdown-item" href="<?php echo $admin_prefix; ?>../gerir_veiculos.php">Gerir Veículos</a></li>
+                                <li><a class="dropdown-item" href="<?php echo $admin_prefix; ?>gerir_veiculos.php">Gerir Veículos</a></li>
                                 <li><a class="dropdown-item" href="<?php echo $admin_prefix; ?>gerir_clientes.php">Gerir Clientes</a></li>
-                                <li><a class="dropdown-item" href="<?php echo $admin_prefix; ?>../gerir_marcas.php">Gerir Marca</a></li>
-                                <li><a class="dropdown-item" href="<?php echo $admin_prefix; ?>../gerir_modelos.php">Gerir Modelo</a></li>
+                                <li><a class="dropdown-item" href="<?php echo $admin_prefix; ?>gerir_marcas.php">Gerir Marca</a></li>
+                                <li><a class="dropdown-item" href="<?php echo $admin_prefix; ?>gerir_modelos.php">Gerir Modelo</a></li>
                                 <li><hr class="dropdown-divider"></li>
                             </ul>
                         </li>

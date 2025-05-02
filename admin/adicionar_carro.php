@@ -18,7 +18,7 @@ ini_set('upload_max_filesize', '20M');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once('config.php');
+require_once('../config.php');
 $conn = connect_db();
 
 $mensagem = '';
@@ -256,7 +256,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Carro - G-Cars</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         body {
@@ -281,7 +281,7 @@ try {
 </head>
 <body>
 
-<?php require('navbar.php'); ?>
+<?php require('../navbar.php'); ?>
 
 <div class="container my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">

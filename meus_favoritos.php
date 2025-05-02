@@ -87,7 +87,7 @@ $title = "Meus Favoritos - G-Cars";
     
     
     <?php
-    require_once __DIR__ . "/config.php";  
+    require_once "config.php";  
 
     try {
         $conn = connect_db();
@@ -136,7 +136,7 @@ $title = "Meus Favoritos - G-Cars";
                         <button type="button" class="favorite-btn" title="Remover dos favoritos" data-car-id="<?php echo $viatura['ID_Carro']; ?>" onclick="removeFavorite(this, event, <?php echo $viatura['ID_Carro']; ?>)">
                             <i class="bi bi-heart-fill"></i>
                         </button>
-                        <a href="detalhes_carro.php?id=<?php echo $viatura['ID_Carro']; ?>" class="text-decoration-none text-dark">
+                        <a href="admin/detalhes_carro.php?id=<?php echo $viatura['ID_Carro']; ?>" class="text-decoration-none text-dark">
                             <div id="<?php echo $carouselId; ?>" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                     <?php
@@ -187,7 +187,7 @@ $title = "Meus Favoritos - G-Cars";
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center mt-3">
                                     <span class="fs-5 fw-bold"><?php echo number_format($viatura['Preco'], 2, ',', '.'); ?>€</span>
-                                    <a href="detalhes_carro.php?id=<?php echo $viatura['ID_Carro']; ?>" class="btn btn-primary">
+                                    <a href="admin/detalhes_carro.php?id=<?php echo $viatura['ID_Carro']; ?>" class="btn btn-primary">
                                         <i class="bi bi-info-circle"></i> Ver Detalhes
                                     </a>
                                 </div>
@@ -209,7 +209,7 @@ $title = "Meus Favoritos - G-Cars";
                     <i class="bi bi-heart"></i>
                     <h3>Você ainda não tem carros favoritos</h3>
                     <p>Adicione carros aos favoritos para vê-los aqui</p>
-                    <a href="VerViaturas.php" class="btn btn-primary mt-3">Ver Viaturas Disponíveis</a>
+                    <a href="admin/VerViaturas.php" class="btn btn-primary mt-3">Ver Viaturas Disponíveis</a>
                   </div>';
         }
     } catch (PDOException $e) {
@@ -263,7 +263,7 @@ $title = "Meus Favoritos - G-Cars";
                             <i class="bi bi-heart"></i>
                             <h3>Você ainda não tem carros favoritos</h3>
                             <p>Adicione carros aos favoritos para vê-los aqui</p>
-                            <a href="VerViaturas.php" class="btn btn-primary mt-3">Ver Viaturas Disponíveis</a>
+                            <a href="admin/VerViaturas.php" class="btn btn-primary mt-3">Ver Viaturas Disponíveis</a>
                         </div>
                     `;
                 }

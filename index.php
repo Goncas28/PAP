@@ -3,6 +3,17 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+require_once("config.php");
+$pdo = connect_db();
+
+// Fetch configurations
+try {
+    $stmt = $pdo->query("SELECT * FROM configuracoes LIMIT 1");
+    $config = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch(PDOException $e) {
+    $config = null;
+}
+
 $title = "G-Cars - Stand Automóvel";
 include "includes/header.php";
 require('navbar.php');
@@ -28,7 +39,7 @@ require('navbar.php');
                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#functionalities">
                                 <div class="accordion-body">
                                     <p>Navegue pelo nosso extenso catálogo de carros disponíveis para venda. Pode filtrar por marca, modelo, ano, preço e outras características para encontrar exatamente o que procura.</p>
-                                    <a href="VerViaturas.php" class="btn btn-outline-primary mt-2">Ver Veículos Disponíveis</a>
+                                    <a href="admin/VerViaturas.php" class="btn btn-outline-primary mt-2">Ver Veículos Disponíveis</a>
                                 </div>
                             </div>
                         </div>
@@ -95,9 +106,8 @@ require('navbar.php');
                                     <p>Ao criar uma conta no nosso site, terá acesso a uma área pessoal onde pode:</p>
                                     <ul>
                                         <li>Gerir as suas visitas agendadas</li>
-                                        <li>Ver o histórico de interações</li>
                                         <li>Atualizar os seus dados pessoais</li>
-                                        <li>Receber notificações sobre novos veículos que correspondam ao seu interesse</li>
+                                       
                                     </ul>
                                     <?php if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true): ?>
                                         <a href="register.php" class="btn btn-outline-primary mt-2">Criar Conta</a>
@@ -115,18 +125,24 @@ require('navbar.php');
                 <div class="card-body">
                     <h3 class="card-title">Horário de Funcionamento</h3>
                     <ul class="list-group list-group-flush mt-3">
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Segunda a Sexta</span>
-                            <strong>9h - 19h</strong>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Sábados</span>
-                            <strong>10h - 16h</strong>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Domingos e Feriados</span>
-                            <strong>Fechado</strong>
-                        </li>
+                        <?php if ($config && $config['horario_funcionamento']): ?>
+                            <li class="list-group-item">
+                                <?php echo htmlspecialchars($config['horario_funcionamento']); ?>
+                            </li>
+                        <?php else: ?>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Segunda a Sexta</span>
+                                <strong>9h - 19h</strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Sábados</span>
+                                <strong>10h - 16h</strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Domingos e Feriados</span>
+                                <strong>Fechado</strong>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div>
@@ -136,10 +152,12 @@ require('navbar.php');
                     <h3 class="card-title">Contactos Rápidos</h3>
                     <ul class="list-group list-group-flush mt-3">
                         <li class="list-group-item">
-                            <i class="bi bi-telephone-fill me-2 text-primary"></i> +351 969053456
+                            <i class="bi bi-telephone-fill me-2 text-primary"></i>
+                            <?php echo $config && $config['telefone_contacto'] ? '+351 ' . htmlspecialchars($config['telefone_contacto']) : '+351 969053456'; ?>
                         </li>
                         <li class="list-group-item">
-                            <i class="bi bi-envelope-fill me-2 text-primary"></i> goncas1416@gmail.com
+                            <i class="bi bi-envelope-fill me-2 text-primary"></i>
+                            <?php echo $config && $config['email_contacto'] ? htmlspecialchars($config['email_contacto']) : 'goncas1416@gmail.com'; ?>
                         </li>
                         <li class="list-group-item">
                             <i class="bi bi-geo-alt-fill me-2 text-primary"></i> Viseu 123
@@ -154,7 +172,7 @@ require('navbar.php');
 <?php include "includes/footer.php"; ?>
 
 <!-- Make sure Bootstrap JS is loaded correctly -->
-<script src="js/bootstrap.bundle.min.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Check if Bootstrap is properly loaded

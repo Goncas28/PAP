@@ -5,12 +5,12 @@ if (!isset($_SESSION)) {
 
 // Verificar se é administrador
 if (!isset($_SESSION["Tipo"]) || $_SESSION["Tipo"] !== "A") {
-    header('Location: login.php');
+    header('Location: Login.php');
     exit();
 }
 
 // Incluir arquivo de configuração
-require_once('config.php');
+require_once('../config.php');
 
 // Obter estatísticas para o dashboard
 try {
@@ -69,7 +69,7 @@ $title = "Painel Administrativo - G-Cars";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?></title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         body {
@@ -132,7 +132,7 @@ $title = "Painel Administrativo - G-Cars";
 </head>
 <body>
 
-<?php require('navbar.php'); ?>
+<?php require('../navbar.php'); ?>
 
 <div class="container my-4">
     
@@ -160,7 +160,7 @@ $title = "Painel Administrativo - G-Cars";
         </div>
         
         <div class="col-md-6">
-            <a href="gerir_veiculos.php" class="card-link">
+            <a href="admin/gerir_veiculos.php" class="card-link">
                 <div class="dashboard-card success">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -214,6 +214,6 @@ $title = "Painel Administrativo - G-Cars";
 
 </script>
 
-<script src="js/bootstrap.bundle.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

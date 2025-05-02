@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['Tipo'] = $user['Tipo'];
                
                 if ($user['Tipo'] === "A") {
-                    header("location: Adminbackofice1.php");
+                    header("location: admin/Adminbackofice1.php");
                     exit;
                 } else {
                     header("location: Dashboard.php");

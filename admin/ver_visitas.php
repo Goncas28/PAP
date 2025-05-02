@@ -10,7 +10,7 @@ session_start();
 
 // Verifica se o usuário é administrador
 if (!isset($_SESSION["Tipo"]) || $_SESSION["Tipo"] !== "A") {
-    header('Location: ../login.php');
+    header('Location: ../Login.php');
     exit();
 }
 
@@ -121,7 +121,7 @@ $title = "Visualizar Visitas - GCars Admin";
                 <a href="aprovar_visitas.php" class="btn btn-primary me-2">
                     <i class="bi bi-check-lg"></i> Aprovar Visitas
                 </a>
-                <a href="../Adminbackofice1.php" class="btn btn-secondary">
+                <a href="Adminbackofice1.php" class="btn btn-secondary">
                     <i class="bi bi-arrow-left"></i> Voltar ao Painel
                 </a>
             </div>

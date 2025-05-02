@@ -9,7 +9,7 @@ if (!isset($_SESSION["Tipo"]) || $_SESSION["Tipo"] !== "A") {
     exit;
 }
 
-require_once('config.php');
+require_once('../config.php');
 $conn = connect_db();
 
 // Configuração da paginação
@@ -83,7 +83,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerir Veículos - G-Cars</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         body { padding-top: 60px; }
@@ -113,7 +113,7 @@ try {
 </head>
 <body>
 
-<?php require('navbar.php'); ?>
+<?php require('../navbar.php'); ?>
 
 <div class="container my-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -247,6 +247,7 @@ function confirmarExclusao(id) {
 }
 </script>
 
-<script src="js/bootstrap.bundle.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

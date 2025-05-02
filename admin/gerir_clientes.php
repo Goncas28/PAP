@@ -82,7 +82,7 @@ try {
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Gestão de Clientes</h2>
-            <a href="../Adminbackofice1.php" class="btn btn-secondary">
+            <a href="Adminbackofice1.php" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Voltar ao Painel
             </a>
         </div>
@@ -145,7 +145,7 @@ try {
     <script>
     function confirmarRemocao(email) {
         if (confirm('Tem certeza que deseja remover este cliente?')) {
-            window.location.href = '../remover_cliente.php?email=' + encodeURIComponent(email) + '&pagina=<?php echo $pagina_atual; ?>';
+            window.location.href = 'remover_cliente.php?email=' + encodeURIComponent(email) + '&pagina=<?php echo $pagina_atual; ?>';
         }
     }
     </script>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . "/config.php";
+require_once  "../config.php";
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['Tipo'])) {
@@ -16,7 +16,7 @@ if (isset($_GET['email'])) {
         $stmt->bindParam(':email', $_GET['email'], PDO::PARAM_STR);
         $stmt->execute();
         
-        header("Location: admin/gerir_clientes.php");
+        header("Location: gerir_clientes.php");
     } catch(PDOException $e) {
         die("Erro ao remover cliente: " . $e->getMessage());
     }

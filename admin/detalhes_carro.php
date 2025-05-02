@@ -3,11 +3,11 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-require_once __DIR__ . "/config.php";
+require_once  "../config.php";
 
 // Verificar se o ID do carro foi fornecido
 if(!isset($_GET['id']) || empty($_GET['id'])) {
-    header("Location: VerViaturas.php");
+    header("Location: ../VerViaturas.php");
     exit;
 }
 
@@ -46,6 +46,13 @@ try {
     $error = "Erro ao carregar detalhes do veículo.";
     error_log("Erro na página de detalhes: " . $e->getMessage());
 }
+
+try {
+    $stmt = $conn->query("SELECT * FROM configuracoes LIMIT 1");
+    $config = $stmt->fetch(PDO::FETCH_ASSOC);
+} catch(PDOException $e) {
+    $config = null;
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -53,7 +60,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?></title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         body {
@@ -93,11 +100,11 @@ try {
 </head>
 <body>
 
-<?php require('navbar.php'); ?>
+<?php require('../navbar.php'); ?>
 
 <div class="container my-4">
     <div class="back-button">
-        <a href="VerViaturas.php" class="btn btn-outline-secondary">
+        <a href="../VerViaturas.php" class="btn btn-outline-secondary">
             <i class="bi bi-arrow-left"></i> Voltar à lista de veículos
         </a>
     </div>
@@ -235,8 +242,14 @@ try {
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Contacto</h5>
-                            <p class="card-text"><i class="bi bi-telephone"></i> +351 969053456</p>
-                            <p class="card-text"><i class="bi bi-envelope"></i> goncas1416@gmail.com</p>
+                            <p class="card-text">
+                                <i class="bi bi-telephone"></i> 
+                                <?php echo $config && $config['telefone_contacto'] ? '+351 ' . htmlspecialchars($config['telefone_contacto']) : '+351 969053456'; ?>
+                            </p>
+                            <p class="card-text">
+                                <i class="bi bi-envelope"></i> 
+                                <?php echo $config && $config['email_contacto'] ? htmlspecialchars($config['email_contacto']) : 'goncas1416@gmail.com'; ?>
+                            </p>
                             <p class="card-text"><i class="bi bi-geo-alt"></i> Viseu 123</p>
                         </div>
                     </div>
@@ -245,9 +258,13 @@ try {
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Horário</h5>
-                            <p class="card-text">Segunda a Sexta: 9h - 19h</p>
-                            <p class="card-text">Sábados: 10h - 16h</p>
-                            <p class="card-text">Domingos e Feriados: Fechado</p>
+                            <?php if ($config && $config['horario_funcionamento']): ?>
+                                <p class="card-text"><?php echo htmlspecialchars($config['horario_funcionamento']); ?></p>
+                            <?php else: ?>
+                                <p class="card-text">Segunda a Sexta: 9h - 19h</p>
+                                <p class="card-text">Sábados: 10h - 16h</p>
+                                <p class="card-text">Domingos e Feriados: Fechado</p>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -256,6 +273,6 @@ try {
     <?php endif; ?>
 </div>
 
-<script src="js/bootstrap.bundle.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

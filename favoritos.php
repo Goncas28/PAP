@@ -35,7 +35,7 @@ if ($carId <= 0) {
 }
 
 // Conectar ao banco de dados
-require_once __DIR__ . "/config.php";
+require_once "config.php";
 
 try {
     $conn = connect_db();

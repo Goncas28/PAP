@@ -100,7 +100,7 @@ $title = "Aprovar Visitas - GCars Admin";
                 <a href="ver_visitas.php" class="btn btn-primary me-2">
                     <i class="bi bi-calendar-check"></i> Ver Todas Visitas
                 </a>
-                <a href="../Adminbackofice1.php" class="btn btn-secondary">
+                <a href="Adminbackofice1.php" class="btn btn-secondary">
                     <i class="bi bi-arrow-left"></i> Voltar ao Painel
                 </a>
             </div>
