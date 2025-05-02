@@ -46,6 +46,16 @@ try {
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
+        body {
+            padding-top: 60px;
+        }
+        .table-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            padding: 20px;
+        }
+
         .pagination .page-link {
             color: #212529;
             background-color: #fff;
@@ -77,62 +87,58 @@ try {
             </a>
         </div>
         
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Data Registo</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = $stmt->fetch()): ?>
-                <tr>
-                    <td><?= htmlspecialchars($row['Nome']) ?></td>
-                    <td><?= htmlspecialchars($row['Email']) ?></td>
-                    <td><?= htmlspecialchars($row['criado_em'] ?? 'N/A') ?></td>
-                    <td>
-                        <button onclick="confirmarRemocao('<?= htmlspecialchars($row['Email']) ?>')" class="btn btn-danger btn-sm">
-                            <i class="bi bi-trash"></i> Remover
-                        </button>
-                    </td>
-                </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
-
-        <?php if ($total_paginas > 1): ?>
-        <nav aria-label="Navegação de páginas" class="mt-4">
-            <ul class="pagination justify-content-center">
-                <!-- Botão Anterior -->
-                <li class="page-item <?php echo ($pagina_atual <= 1) ? 'disabled' : ''; ?>">
-                    <a class="page-link" href="?pagina=<?php echo $pagina_atual - 1; ?>" aria-label="Anterior">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                
-                <!-- Números das Páginas -->
-                <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
-                    <li class="page-item <?php echo ($pagina_atual == $i) ? 'active' : ''; ?>">
-                        <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+        <div class="table-container">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Data Registo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($row = $stmt->fetch()): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($row['Nome']) ?></td>
+                        <td><?= htmlspecialchars($row['Email']) ?></td>
+                        <td><?= htmlspecialchars($row['criado_em'] ?? 'N/A') ?></td>
+                        <td>
+                            <button onclick="confirmarRemocao('<?= htmlspecialchars($row['Email']) ?>')" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i> Remover
+                            </button>
+                        </td>
+                    </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+            
+            <?php if ($total_paginas > 1): ?>
+            <nav aria-label="Navegação de páginas" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <!-- Botão Anterior -->
+                    <li class="page-item <?php echo ($pagina_atual <= 1) ? 'disabled' : ''; ?>">
+                        <a class="page-link" href="?pagina=<?php echo $pagina_atual - 1; ?>" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
                     </li>
-                <?php endfor; ?>
-                
-                <!-- Botão Próximo -->
-                <li class="page-item <?php echo ($pagina_atual >= $total_paginas) ? 'disabled' : ''; ?>">
-                    <a class="page-link" href="?pagina=<?php echo $pagina_atual + 1; ?>" aria-label="Próximo">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <?php endif; ?>
-
-        <div class="mt-3">
-            <a href="../Adminbackofice1.php" class="btn btn-secondary">
-                <i class="bi bi-arrow-left"></i> Voltar
-            </a>
+                    
+                    <!-- Números das Páginas -->
+                    <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+                        <li class="page-item <?php echo ($pagina_atual == $i) ? 'active' : ''; ?>">
+                            <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        </li>
+                    <?php endfor; ?>
+                    
+                    <!-- Botão Próximo -->
+                    <li class="page-item <?php echo ($pagina_atual >= $total_paginas) ? 'disabled' : ''; ?>">
+                        <a class="page-link" href="?pagina=<?php echo $pagina_atual + 1; ?>" aria-label="Próximo">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <?php endif; ?>
         </div>
     </div>
 

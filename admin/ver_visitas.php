@@ -234,16 +234,6 @@ $title = "Visualizar Visitas - GCars Admin";
             </nav>
             <?php endif; ?>
         </div>
-        
-        <nav aria-label="Paginação">
-            <ul class="pagination justify-content-center mt-4">
-                <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
-                    <li class="page-item <?php echo $i == $pagina_atual ? 'active' : ''; ?>">
-                        <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
-                    </li>
-                <?php endfor; ?>
-            </ul>
-        </nav>
     </div>
 
     <script>

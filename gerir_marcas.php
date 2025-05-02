@@ -91,6 +91,26 @@ try {
     <style>
         body { padding-top: 60px; }
         .action-buttons { white-space: nowrap; }
+        
+        /* Adicionar estes estilos de paginação */
+        .pagination .page-link {
+            color: #212529;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #212529;
+            border-color: #212529;
+            color: #fff;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            color: #6c757d;
+            pointer-events: none;
+            background-color: #fff;
+            border-color: #dee2e6;
+        }
     </style>
 </head>
 <body>
@@ -159,33 +179,32 @@ try {
                     </tbody>
                 </table>
                 
-                <!-- Adicionar paginação -->
-                <?php if ($total_paginas > 1): ?>
-                <nav aria-label="Navegação de páginas" class="mt-4">
-                    <ul class="pagination justify-content-center">
-                        <!-- Botão Anterior -->
-                        <li class="page-item <?php echo ($pagina_atual <= 1) ? 'disabled' : ''; ?>">
-                            <a class="page-link" href="?pagina=<?php echo $pagina_atual - 1; ?>" aria-label="Anterior">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
+            <?php if ($total_paginas > 1): ?>
+            <nav aria-label="Navegação de páginas" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <!-- Botão Anterior -->
+                    <li class="page-item <?php echo ($pagina_atual <= 1) ? 'disabled' : ''; ?>">
+                        <a class="page-link" href="?pagina=<?php echo $pagina_atual - 1; ?>" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    
+                    <!-- Números das Páginas -->
+                    <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+                        <li class="page-item <?php echo ($pagina_atual == $i) ? 'active' : ''; ?>">
+                            <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
                         </li>
-                        
-                        <!-- Números das Páginas -->
-                        <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
-                            <li class="page-item <?php echo ($pagina_atual == $i) ? 'active' : ''; ?>">
-                                <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
-                            </li>
-                        <?php endfor; ?>
-                        
-                        <!-- Botão Próximo -->
-                        <li class="page-item <?php echo ($pagina_atual >= $total_paginas) ? 'disabled' : ''; ?>">
-                            <a class="page-link" href="?pagina=<?php echo $pagina_atual + 1; ?>" aria-label="Próximo">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <?php endif; ?>
+                    <?php endfor; ?>
+                    
+                    <!-- Botão Próximo -->
+                    <li class="page-item <?php echo ($pagina_atual >= $total_paginas) ? 'disabled' : ''; ?>">
+                        <a class="page-link" href="?pagina=<?php echo $pagina_atual + 1; ?>" aria-label="Próximo">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <?php endif; ?>
             </div>
         </div>
     </div>

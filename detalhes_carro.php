@@ -137,18 +137,23 @@ try {
                 <p class="car-price"><?php echo number_format($carro['Preco'], 2, ',', '.'); ?>€</p>
                 
                 <div class="d-grid gap-2 mt-4">
-                    <?php if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && $_SESSION["Tipo"] !== "A"): ?>
-                        <a href="marcar_visita.php?id_carro=<?php echo $carro['ID_Carro']; ?>" class="btn btn-primary btn-lg">
-                            <i class="bi bi-calendar2-check"></i> Marcar Visita
-                        </a>
+                    <?php if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
+                        <?php if ($_SESSION["Tipo"] !== "A"): ?>
+                            <a href="marcar_visita.php?id_carro=<?php echo $carro['ID_Carro']; ?>" class="btn btn-primary btn-lg">
+                                <i class="bi bi-calendar2-check"></i> Marcar Visita
+                            </a>
+                            <a href="tel:+351969053456" class="btn btn-outline-success">
+                                <i class="bi bi-telephone"></i> Contactar Vendedor
+                            </a>
+                        <?php endif; ?>
                     <?php else: ?>
                         <a href="login.php" class="btn btn-outline-primary">
                             <i class="bi bi-box-arrow-in-right"></i> Faça login para marcar uma visita
                         </a>
+                        <a href="tel:+351969053456" class="btn btn-outline-success">
+                            <i class="bi bi-telephone"></i> Contactar Vendedor
+                        </a>
                     <?php endif; ?>
-                    <a href="tel:+351969053456" class="btn btn-outline-success">
-                        <i class="bi bi-telephone"></i> Contactar Vendedor
-                    </a>
                 </div>
                 
                 <div class="mt-4">
