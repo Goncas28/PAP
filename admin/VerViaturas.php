@@ -233,12 +233,9 @@ $title = "Ver Viaturas - G-Cars";
         error_log("Database Error: " . $e->getMessage());
     }
     ?>
-    </div>
+</div>
 </div>
 
-<?php require('../includes/footer.php'); ?>
-<script src="../js/bootstrap.bundle.min.js"></script>
-<script src="../js/script.js"></script>
 
 
 <script>
@@ -268,7 +265,7 @@ $title = "Ver Viaturas - G-Cars";
         formData.append('car_id', carId);
         
         // Enviar dados para o servidor
-        fetch('../favoritos.php', {
+        fetch('favoritos.php', {
             method: 'POST',
             body: formData
         })
@@ -308,5 +305,6 @@ $title = "Ver Viaturas - G-Cars";
         });
     }
 </script>
+<script src="../js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

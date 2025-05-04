@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-require_once __DIR__ . "/config.php";
+require_once("../config.php");
 
 $title = "Pesquisa - Teste";
 
@@ -140,7 +140,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?></title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         body {
@@ -310,7 +310,7 @@ try {
 </head>
 <body>
 
-<?php require('navbar.php'); ?>
+<?php require('../navbar.php'); ?>
 
 <div class="container my-5">
     <div class="search-container">
@@ -517,7 +517,7 @@ try {
 </div>
 
 <!-- JavaScript para iniciar na aba correta baseado na pesquisa -->
-<script src="js/bootstrap.bundle.min.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Ativar a aba adequada com base no tipo de pesquisa
@@ -669,7 +669,7 @@ try {
 </div>
 </div>
 
-<?php require('includes/footer.php'); ?>
-<script src="js/bootstrap.bundle.min.js"></script>
+
+<script src="../js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

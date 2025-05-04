@@ -16,6 +16,9 @@ $title = "Serviços - G-Cars";
     <style>
         body {
             padding-top: 60px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         .service-card {
             transition: transform 0.3s;
@@ -24,44 +27,50 @@ $title = "Serviços - G-Cars";
         .service-card:hover {
             transform: translateY(-5px);
         }
+        main {
+            flex: 1;
+        }
     </style>
 </head>
 <body>
 
-<?php require('navbar.php'); ?>
+<?php include 'navbar.php'; ?>
 
-<div class="container my-4">
-    <h1 class="mb-4">Nossos Serviços</h1>
-    
-    <!-- Conteúdo da página aqui -->
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 service-card">
-                <div class="card-body">
-                    <h5 class="card-title">Venda de Veículos</h5>
-                    <p class="card-text">Oferecemos uma ampla gama de veículos novos e usados com as melhores condições do mercado.</p>
+<main>
+    <div class="container my-4">
+        <h1 class="mb-4">Nossos Serviços</h1>
+        
+        <!-- Conteúdo da página aqui -->
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 service-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Venda de Veículos</h5>
+                        <p class="card-text">Oferecemos uma ampla gama de veículos novos e usados com as melhores condições do mercado.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 service-card">
-                <div class="card-body">
-                    <h5 class="card-title">Garantia</h5>
-                    <p class="card-text">Serviços completos de manutenção realizados por profissionais qualificados.</p>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 service-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Garantia</h5>
+                        <p class="card-text">Serviços completos de manutenção realizados por profissionais qualificados.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 service-card">
-                <div class="card-body">
-                    <h5 class="card-title">Financiamento</h5>
-                    <p class="card-text">Soluções de financiamento personalizadas para atender às suas necessidades.</p>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 service-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Financiamento</h5>
+                        <p class="card-text">Soluções de financiamento personalizadas para atender às suas necessidades.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</main>
 
-<?php require('includes/footer.php'); ?>
+<?php include 'includes/footer.php'; ?>
+
 </body>
 </html>

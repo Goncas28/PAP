@@ -104,7 +104,7 @@ try {
 
 <div class="container my-4">
     <div class="back-button">
-        <a href="../VerViaturas.php" class="btn btn-outline-secondary">
+        <a href="VerViaturas.php" class="btn btn-outline-secondary">
             <i class="bi bi-arrow-left"></i> Voltar à lista de veículos
         </a>
     </div>
@@ -154,7 +154,7 @@ try {
                             </a>
                         <?php endif; ?>
                     <?php else: ?>
-                        <a href="login.php" class="btn btn-outline-primary">
+                        <a href="../login.php" class="btn btn-outline-primary">
                             <i class="bi bi-box-arrow-in-right"></i> Faça login para marcar uma visita
                         </a>
                         <a href="tel:+351969053456" class="btn btn-outline-success">

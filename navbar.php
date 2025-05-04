@@ -51,7 +51,7 @@ $root_prefix = $in_admin_folder ? '../' : '';
                 <?php endif; ?>
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo $root_prefix; ?>Pesquisa.php">Pesquisar</a>
+                    <a class="nav-link" href="<?php echo $root_prefix; ?>admin/Pesquisa.php">Pesquisar</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo $root_prefix; ?>Contactos.php">Contactos</a>
@@ -75,7 +75,7 @@ $root_prefix = $in_admin_folder ? '../' : '';
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
                             <li><a class="dropdown-item" href="<?php echo $root_prefix; ?>Dashboard.php"><i class="bi bi-person"></i> Meu Perfil</a></li>
-                            <li><a class="dropdown-item" href="<?php echo $root_prefix; ?>meus_favoritos.php"><i class="bi bi-heart"></i> Meus Favoritos</a></li>
+                            <li><a class="dropdown-item" href="<?php echo $root_prefix; ?>admin/meus_favoritos.php"><i class="bi bi-heart"></i> Meus Favoritos</a></li>
                             <?php if (isset($_SESSION["Tipo"]) && $_SESSION["Tipo"] === "A"): ?>
                                 <li><a class="dropdown-item" href="<?php echo $admin_prefix; ?>definicoes.php"><i class="bi bi-gear"></i> Definições</a></li>
                             <?php endif; ?>

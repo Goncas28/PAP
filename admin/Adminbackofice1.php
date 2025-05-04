@@ -144,7 +144,7 @@ $title = "Painel Administrativo - G-Cars";
         </div>
         
         <div class="col-md-6">
-            <a href="admin/gerir_clientes.php" class="card-link">
+            <a href="gerir_clientes.php" class="card-link">
                 <div class="dashboard-card primary">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -160,7 +160,7 @@ $title = "Painel Administrativo - G-Cars";
         </div>
         
         <div class="col-md-6">
-            <a href="admin/gerir_veiculos.php" class="card-link">
+            <a href="gerir_veiculos.php" class="card-link">
                 <div class="dashboard-card success">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -176,7 +176,7 @@ $title = "Painel Administrativo - G-Cars";
         </div>
         
         <div class="col-md-6">
-            <a href="admin/ver_visitas.php" class="card-link">
+            <a href="ver_visitas.php" class="card-link">
                 <div class="dashboard-card danger">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -192,7 +192,7 @@ $title = "Painel Administrativo - G-Cars";
         </div>
         
         <div class="col-md-6">
-            <a href="admin/aprovar_visitas.php" class="card-link">
+            <a href="aprovar_visitas.php" class="card-link">
                 <div class="dashboard-card purple">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>

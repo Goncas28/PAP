@@ -20,7 +20,7 @@ $title = "Meus Favoritos - G-Cars";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title; ?></title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         body {
@@ -81,13 +81,13 @@ $title = "Meus Favoritos - G-Cars";
 </head>
 <body>
 
-<?php require('navbar.php'); ?>
+<?php require('../navbar.php'); ?>
 
 <div class="container my-4">
     
     
     <?php
-    require_once "config.php";  
+    require_once "../config.php";  
 
     try {
         $conn = connect_db();
@@ -219,7 +219,8 @@ $title = "Meus Favoritos - G-Cars";
     ?>
 </div>
 
-<script src="js/bootstrap.bundle.min.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+
 <script>
     // Função para remover um favorito
     function removeFavorite(button, event, carId) {
@@ -281,5 +282,6 @@ $title = "Meus Favoritos - G-Cars";
         });
     }
 </script>
+
 </body>
 </html>
