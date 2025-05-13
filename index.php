@@ -59,7 +59,7 @@ require('navbar.php');
                                             <a href="marcar_visita.php" class="btn btn-outline-primary">Marcar Visita</a>
                                         <?php else: ?>
                                             <a href="login.php" class="btn btn-outline-primary">Iniciar Sessão</a>
-                                            <a href="register.php" class="btn btn-outline-secondary">Criar Conta</a>
+                                            <a href="Registo.php" class="btn btn-outline-secondary">Criar Conta</a>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -110,7 +110,7 @@ require('navbar.php');
                                        
                                     </ul>
                                     <?php if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true): ?>
-                                        <a href="register.php" class="btn btn-outline-primary mt-2">Criar Conta</a>
+                                        <a href="Registo.php" class="btn btn-outline-primary mt-2">Criar Conta</a>
                                     <?php endif; ?>
                                 </div>
                             </div>
