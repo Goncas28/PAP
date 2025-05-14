@@ -146,7 +146,7 @@ try {
                 <div class="d-grid gap-2 mt-4">
                     <?php if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true): ?>
                         <?php if ($_SESSION["Tipo"] !== "A"): ?>
-                            <a href="marcar_visita.php?id_carro=<?php echo $carro['ID_Carro']; ?>" class="btn btn-primary btn-lg">
+                            <a href="../marcar_visita.php?id_carro=<?php echo $carro['ID_Carro']; ?>" class="btn btn-primary btn-lg">
                                 <i class="bi bi-calendar2-check"></i> Marcar Visita
                             </a>
                             <a href="tel:+351969053456" class="btn btn-outline-success">

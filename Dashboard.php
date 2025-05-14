@@ -265,7 +265,7 @@ include "includes/header.php";
 </script>
 
 <!-- Ensure Bootstrap JS is loaded -->
-<script src="js/bootstrap.bundle.min.js"></script>
+
 
 <?php include 'includes/footer.php'; ?>
 </body>

@@ -179,7 +179,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 Não tem uma conta? <a href="Registo.php" class="text-decoration-none">Registar</a>
             </p>
             <p class="text-center mt-3">
-                <a href="Login.php?recuperar=true" class="text-decoration-none">Esqueceu sua senha?</a>
+                <a href="Login.php?recuperar=true" class="text-decoration-none">Esqueceu a sua senha?</a>
             </p>
         <?php endif; ?>
     </div>
